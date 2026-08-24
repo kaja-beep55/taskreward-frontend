@@ -28,6 +28,24 @@ const mockSettings = {
   save() {},
 };
 
+// Real backend authService with getProfile fallback
+const realAuthService = {
+  ...realServices.authService,
+  getProfile() {
+    // Real backend doesn't have getProfile — return null (router will handle)
+    return null;
+  },
+};
+
+// Real backend adminService with isAuthed fallback
+const realAdminService = {
+  ...realServices.adminService,
+  isAuthed() {
+    // Real backend checks Supabase session, not localStorage
+    return false; // Router will redirect to admin/login
+  },
+};
+
 // Real backend settingsService with defaults fallback
 const realSettingsWithDefaults = {
   async getAll() {
@@ -48,12 +66,12 @@ const realSettingsWithDefaults = {
 };
 
 // Export the appropriate services
-export const authService = useRealBackend ? realServices.authService : mockServices.authService;
+export const authService = useRealBackend ? realAuthService : mockServices.authService;
 export const taskService = useRealBackend ? realServices.taskService : mockServices.taskService;
 export const userService = useRealBackend ? realServices.userService : mockServices.userService;
 export const coinService = useRealBackend ? realServices.coinService : mockServices.coinService;
 export const submissionService = useRealBackend ? realServices.submissionService : mockServices.submissionService;
-export const adminService = useRealBackend ? realServices.adminService : mockServices.adminService;
+export const adminService = useRealBackend ? realAdminService : mockServices.adminService;
 export const settingsService = useRealBackend ? realSettingsWithDefaults : mockServices.settingsService;
 export const storageService = useRealBackend ? realServices.storageService : mockServices.storageService;
 export { mockSettings };
