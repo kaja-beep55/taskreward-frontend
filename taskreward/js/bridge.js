@@ -16,7 +16,7 @@ if (useRealBackend) {
   console.log('🎭 Using mock backend (configure backend/js/supabase.js to switch)');
 }
 
-// Mock fallback for settings (real backend settingsService doesn't have getAll with defaults)
+// Mock fallback for settings (real backend settingsService returns DB rows without defaults)
 const mockSettings = {
   getAll() {
     return {
@@ -28,6 +28,25 @@ const mockSettings = {
   save() {},
 };
 
+// Real backend settingsService with defaults fallback
+const realSettingsWithDefaults = {
+  async getAll() {
+    const dbSettings = await realServices.settingsService.getAll();
+    return {
+      whatsappNumber: dbSettings.whatsapp_number || dbSettings.whatsappNumber || '10000000000',
+      appName: dbSettings.app_name || dbSettings.appName || 'TaskReward',
+      defaultTaskStatus: dbSettings.default_task_status || dbSettings.defaultTaskStatus || 'draft',
+    };
+  },
+  async save(updates) {
+    const mapped = {};
+    if (updates.whatsappNumber !== undefined) mapped.whatsapp_number = updates.whatsappNumber;
+    if (updates.appName !== undefined) mapped.app_name = updates.appName;
+    if (updates.defaultTaskStatus !== undefined) mapped.default_task_status = updates.defaultTaskStatus;
+    return realServices.settingsService.save(mapped);
+  },
+};
+
 // Export the appropriate services
 export const authService = useRealBackend ? realServices.authService : mockServices.authService;
 export const taskService = useRealBackend ? realServices.taskService : mockServices.taskService;
@@ -35,6 +54,6 @@ export const userService = useRealBackend ? realServices.userService : mockServi
 export const coinService = useRealBackend ? realServices.coinService : mockServices.coinService;
 export const submissionService = useRealBackend ? realServices.submissionService : mockServices.submissionService;
 export const adminService = useRealBackend ? realServices.adminService : mockServices.adminService;
-export const settingsService = useRealBackend ? realServices.settingsService : mockServices.settingsService;
+export const settingsService = useRealBackend ? realSettingsWithDefaults : mockServices.settingsService;
 export const storageService = useRealBackend ? realServices.storageService : mockServices.storageService;
 export { mockSettings };
