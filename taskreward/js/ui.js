@@ -28,8 +28,8 @@ export function avatarHtml(name, small = false) {
 }
 
 export function thumbHtml(task, extraClass = '') {
-  if (task.imageData) {
-    return `<div class="task-thumb ${extraClass}" style="padding:0;overflow:hidden"><img src="${task.imageData}" alt="${escapeHtml(task.title)}" style="width:100%;height:100%;object-fit:cover"></div>`;
+  if (task.image_url || task.imageData) {
+    return `<div class="task-thumb ${extraClass}" style="padding:0;overflow:hidden"><img src="${task.image_url || task.imageData}" alt="${escapeHtml(task.title)}" style="width:100%;height:100%;object-fit:cover"></div>`;
   }
   const theme = THUMB_THEMES[task.theme] || THUMB_THEMES.default;
   return `<div class="task-thumb ${extraClass}" style="background:${theme.bg}" aria-hidden="true">${theme.emoji}</div>`;
@@ -45,7 +45,7 @@ export function taskCardHtml(task) {
         <h3 class="task-title">${escapeHtml(task.title)}</h3>
         ${badge(task.status)}
       </div>
-      <p class="task-desc">${escapeHtml(task.shortDesc)}</p>
+      <p class="task-desc">${escapeHtml(task.short_desc || task.shortDesc)}</p>
       <div class="task-meta">
         <span class="reward">🪙 ${task.reward_coins || task.reward} Coins</span>
         <a class="btn btn-primary btn-sm" href="#/tasks/${task.id}">DETAILS</a>

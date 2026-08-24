@@ -76,17 +76,17 @@ export async function TaskDetailPage(id) {
           <div class="detail-header">
             <div>
               <h2 class="detail-title">${escapeHtml(task.title)}</h2>
-              <p class="text-muted mt-8">⏱ Estimated time: ${escapeHtml(task.estTime || '—')} · ${badge(task.status)}</p>
+              <p class="text-muted mt-8">⏱ Estimated time: ${escapeHtml(task.est_time || task.estTime || '—')} · ${badge(task.status)}</p>
             </div>
             <div class="reward-big">🪙 ${task.reward_coins || task.reward} Coins</div>
           </div>
-          <p class="mt-16">${escapeHtml(task.fullDesc)}</p>
+          <p class="mt-16">${escapeHtml(task.full_desc || task.fullDesc)}</p>
         </div>
 
         <div class="card mt-16">
           <h3 class="section-title" style="margin-top:0">What You Need To Do</h3>
           <div class="instruction-list">
-            ${task.whatToDo.map((s, i) => `
+            ${task.what_to_do || task.whatToDo.map((s, i) => `
               <div class="instruction-item">
                 <span class="step-num">${i + 1}</span>
                 <span>${escapeHtml(s)}</span>
@@ -97,7 +97,7 @@ export async function TaskDetailPage(id) {
         <div class="card mt-16">
           <h3 class="section-title" style="margin-top:0">What NOT To Do</h3>
           <div class="instruction-list">
-            ${task.whatNotToDo.map((s) => `
+            ${task.what_not_to_do || task.whatNotToDo.map((s) => `
               <div class="instruction-item">
                 <span class="step-num warn">✕</span>
                 <span>${escapeHtml(s)}</span>
@@ -109,7 +109,7 @@ export async function TaskDetailPage(id) {
           <h3 class="section-title" style="margin-top:0">Important Requirements</h3>
           <p>${escapeHtml(task.requirements || '—')}</p>
           <h3 class="section-title">Target Link</h3>
-          <a class="btn btn-outline btn-block" href="${escapeHtml(task.targetUrl)}" target="_blank" rel="noopener noreferrer">🔗 Open Task Link</a>
+          <a class="btn btn-outline btn-block" href="${escapeHtml(task.target_url || task.targetUrl)}" target="_blank" rel="noopener noreferrer">🔗 Open Task Link</a>
           <div class="verify-note mt-16">
             <span aria-hidden="true">ℹ️</span>
             <span><strong>Reward: ${task.reward_coins || task.reward} Coins.</strong> Coins are <strong>not</strong> added automatically. Reward is added after administrator verification.</span>
