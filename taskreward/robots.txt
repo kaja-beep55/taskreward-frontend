@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /#/admin
+
+# Hash-routed SPA — sitemap placeholder for Phase 8
