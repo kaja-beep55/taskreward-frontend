@@ -16,6 +16,18 @@ if (useRealBackend) {
   console.log('🎭 Using mock backend (configure backend/js/supabase.js to switch)');
 }
 
+// Mock fallback for settings (real backend settingsService doesn't have getAll with defaults)
+const mockSettings = {
+  getAll() {
+    return {
+      whatsappNumber: '10000000000',
+      appName: 'TaskReward',
+      defaultTaskStatus: 'draft',
+    };
+  },
+  save() {},
+};
+
 // Export the appropriate services
 export const authService = useRealBackend ? realServices.authService : mockServices.authService;
 export const taskService = useRealBackend ? realServices.taskService : mockServices.taskService;
@@ -25,3 +37,4 @@ export const submissionService = useRealBackend ? realServices.submissionService
 export const adminService = useRealBackend ? realServices.adminService : mockServices.adminService;
 export const settingsService = useRealBackend ? realServices.settingsService : mockServices.settingsService;
 export const storageService = useRealBackend ? realServices.storageService : mockServices.storageService;
+export { mockSettings };
