@@ -440,6 +440,16 @@ export const settingsService = {
     if (error) throw error;
     return data;
   },
+
+  // Save multiple settings at once
+  async save(updates) {
+    const results = [];
+    for (const [key, value] of Object.entries(updates)) {
+      const result = await this.update(key, String(value));
+      results.push(result);
+    }
+    return results;
+  },
 };
 
 // ============================================================
@@ -477,7 +487,7 @@ export const storageService = {
 };
 
 // ============================================================
-// ADMIN SERVICE — Admin authentication
+// ADMIN SERVICE — Admin authentication + management
 // ============================================================
 export const adminService = {
   // Check if current user is admin
@@ -507,5 +517,29 @@ export const adminService = {
 
     if (error) return null;
     return data?.role;
+  },
+
+  // Login — real Supabase auth (email/password or magic link)
+  // For V1: admin uses Supabase dashboard to create first admin user
+  // Then logs in with that account. No 10-digit password in frontend.
+  async login() {
+    // Real implementation: check if user is already authenticated + has admin role
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      throw new Error('Please sign in with your admin account first');
+    }
+    
+    const isAdmin = await this.isAdmin();
+    if (!isAdmin) {
+      throw new Error('This account does not have admin privileges');
+    }
+    
+    return true;
+  },
+
+  // Logout
+  async logout() {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
   },
 };

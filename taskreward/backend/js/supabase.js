@@ -1,21 +1,36 @@
 // ============================================================
 // SUPABASE CLIENT CONFIGURATION
 // Phase 2: Real backend connection
-// Replace with your actual Supabase project credentials
+// Uses environment variables with fallback to placeholder
 // ============================================================
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
 // ============================================================
-// CONFIGURATION — Replace these with your Supabase project values
-// Get these from: https://supabase.com/dashboard/project/_/settings/api
+// CONFIGURATION — Set via environment variables or edit directly
+// For local dev: create a .env file or edit values below
+// For production: use your hosting platform's env vars
 // ============================================================
-const SUPABASE_URL = 'YOUR_SUPABASE_URL'; // e.g., https://xyzcompany.supabase.co
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // public anon key (safe for frontend)
+
+// Try to read from environment (Node.js/build tools) or use placeholder
+const getEnv = (key, fallback = '') => {
+  // Browser: check for injected env vars (e.g., via window.__ENV__)
+  if (typeof window !== 'undefined' && window.__ENV__ && window.__ENV__[key]) {
+    return window.__ENV__[key];
+  }
+  // Node.js: check process.env
+  if (typeof process !== 'undefined' && process.env && process.env[key]) {
+    return process.env[key];
+  }
+  return fallback;
+};
+
+const SUPABASE_URL = getEnv('SUPABASE_URL', 'YOUR_SUPABASE_URL');
+const SUPABASE_ANON_KEY = getEnv('SUPABASE_ANON_KEY', 'YOUR_SUPABASE_ANON_KEY');
 
 // Validate configuration
 if (SUPABASE_URL === 'YOUR_SUPABASE_URL' || SUPABASE_ANON_KEY === 'YOUR_SUPABASE_ANON_KEY') {
-  console.warn('⚠️ Supabase not configured. Using mock mode. Update backend/js/supabase.js with your credentials.');
+  console.warn('⚠️ Supabase not configured. Using mock mode. Set SUPABASE_URL and SUPABASE_ANON_KEY environment variables.');
 }
 
 // Create Supabase client

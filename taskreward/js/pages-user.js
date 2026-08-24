@@ -2,7 +2,7 @@
 // USER PAGES
 // ============================================================
 import { DISTRICTS } from './config.js';
-import { authService, taskService, coinService, submissionService } from './services.js';
+import { authService, taskService, coinService, submissionService } from './bridge.js';
 import {
   escapeHtml, badge, avatarHtml, taskCardHtml, loadingHtml, skeletonGridHtml,
   emptyStateHtml, errorStateHtml, showToast, openConfirm, whatsappSupportCardHtml,

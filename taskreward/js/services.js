@@ -57,7 +57,9 @@ export const authService = {
       isAnonymous: true, // mirrors Supabase is_anonymous claim
     };
     LS.write(this.PROFILE_KEY, profile);
-    return profile;
+    // Mock recovery code for demo flow
+    const mockRecovery = 'MOCK-' + Math.random().toString(36).slice(2, 6).toUpperCase() + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+    return { ...profile, recovery_code: mockRecovery };
   },
 
   // TODO Phase 2: UPDATE profiles SET ... WHERE id = auth.uid()
@@ -74,6 +76,19 @@ export const authService = {
   async logout() {
     await simulateLatency(150);
     LS.remove(this.PROFILE_KEY);
+  },
+
+  // TODO Phase 2: real recovery via secure function
+  async recoverAccount(code) {
+    await simulateLatency(300);
+    const profile = this.getProfile();
+    if (!profile) throw new Error('No profile found on this device. Create a new profile first.');
+    return profile;
+  },
+
+  // Check if current user is admin (mock: always false)
+  async isAdmin() {
+    return false;
   },
 };
 
@@ -293,6 +308,11 @@ export const adminService = {
 
   isAuthed() {
     return LS.read(this.KEY, false) === true;
+  },
+
+  // Check if current user is admin (mock: checks localStorage flag)
+  async isAdmin() {
+    return this.isAuthed();
   },
 
   // Accepts any 10-character credential purely to demo the UI

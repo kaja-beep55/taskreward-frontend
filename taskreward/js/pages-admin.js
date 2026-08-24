@@ -2,11 +2,12 @@
 // ADMIN PAGES — all data operations are MOCK frontend state.
 // Phase 3+: real auth, RLS-protected queries, audit logs.
 // ============================================================
-import { DISTRICTS, settingsService } from './config.js';
+import { DISTRICTS } from './config.js';
+import { settingsService } from './bridge.js';
 import {
   adminService, taskService, userService, coinService,
   submissionService, storageService,
-} from './services.js';
+} from './bridge.js';
 import {
   escapeHtml, badge, avatarHtml, thumbHtml, loadingHtml, emptyStateHtml,
   errorStateHtml, showToast, openConfirm, txItemHtml, formatDate,
