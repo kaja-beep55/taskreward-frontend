@@ -86,7 +86,7 @@ export async function TaskDetailPage(id) {
         <div class="card mt-16">
           <h3 class="section-title" style="margin-top:0">What You Need To Do</h3>
           <div class="instruction-list">
-            ${task.what_to_do || task.whatToDo.map((s, i) => `
+            ${(task.what_to_do || task.whatToDo || []).map((s, i) => `
               <div class="instruction-item">
                 <span class="step-num">${i + 1}</span>
                 <span>${escapeHtml(s)}</span>
@@ -97,7 +97,7 @@ export async function TaskDetailPage(id) {
         <div class="card mt-16">
           <h3 class="section-title" style="margin-top:0">What NOT To Do</h3>
           <div class="instruction-list">
-            ${task.what_not_to_do || task.whatNotToDo.map((s) => `
+            ${(task.what_not_to_do || task.whatNotToDo || []).map((s) => `
               <div class="instruction-item">
                 <span class="step-num warn">✕</span>
                 <span>${escapeHtml(s)}</span>
