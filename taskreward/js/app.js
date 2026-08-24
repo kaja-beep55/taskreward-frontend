@@ -4,10 +4,10 @@
 // Phase 3: guards become real auth/session checks server-side.
 // ============================================================
 import { CONFIG, settingsService } from './config.js';
-import { authService, adminService } from './services.js';
+import { authService, adminService } from './bridge.js';
 import { openWhatsApp, errorStateHtml, escapeHtml } from './ui.js';
 import {
-  HomePage, TaskDetailPage, ProfileCreatePage, ProfilePage,
+  HomePage, TaskDetailPage, ProfileCreatePage, ProfileRecoverPage, ProfilePage,
   ProfileEditPage, TaskHistoryPage, handleUserLogout,
 } from './pages-user.js';
 import {
@@ -26,6 +26,7 @@ const routes = [
   { pattern: /^\/tasks$/,                   kind: 'user',   page: () => HomePage() },
   { pattern: /^\/tasks\/([\w-]+)$/,         kind: 'user',   page: (p) => TaskDetailPage(p[1]) },
   { pattern: /^\/profile\/create$/,         kind: 'user',   page: () => ProfileCreatePage() },
+  { pattern: /^\/profile\/recover$/,        kind: 'user',   page: () => ProfileRecoverPage() },
   { pattern: /^\/profile\/edit$/,           kind: 'user',   page: () => ProfileEditPage() },
   { pattern: /^\/profile$/,                 kind: 'user',   page: () => ProfilePage() },
   { pattern: /^\/task-history$/,            kind: 'user',   page: () => TaskHistoryPage() },
