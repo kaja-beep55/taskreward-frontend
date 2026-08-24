@@ -235,7 +235,7 @@ export async function AdminTaskFormPage(taskId) {
           </div>
           <div class="field">
             <label for="tf-reward">Reward Coins</label>
-            <input id="tf-reward" name="reward" type="number" min="1" max="100000" required value="${task ? task.reward : ''}">
+            <input id="tf-reward" name="reward" type="number" min="1" max="100000" required value="${task ? task.reward_coins || task.reward : ''}">
           </div>
           <div class="field">
             <label for="tf-time">Estimated Time</label>

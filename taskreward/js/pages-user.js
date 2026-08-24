@@ -78,7 +78,7 @@ export async function TaskDetailPage(id) {
               <h2 class="detail-title">${escapeHtml(task.title)}</h2>
               <p class="text-muted mt-8">⏱ Estimated time: ${escapeHtml(task.estTime || '—')} · ${badge(task.status)}</p>
             </div>
-            <div class="reward-big">🪙 ${task.reward} Coins</div>
+            <div class="reward-big">🪙 ${task.reward_coins || task.reward} Coins</div>
           </div>
           <p class="mt-16">${escapeHtml(task.fullDesc)}</p>
         </div>
@@ -112,7 +112,7 @@ export async function TaskDetailPage(id) {
           <a class="btn btn-outline btn-block" href="${escapeHtml(task.targetUrl)}" target="_blank" rel="noopener noreferrer">🔗 Open Task Link</a>
           <div class="verify-note mt-16">
             <span aria-hidden="true">ℹ️</span>
-            <span><strong>Reward: ${task.reward} Coins.</strong> Coins are <strong>not</strong> added automatically. Reward is added after administrator verification.</span>
+            <span><strong>Reward: ${task.reward_coins || task.reward} Coins.</strong> Coins are <strong>not</strong> added automatically. Reward is added after administrator verification.</span>
           </div>
         </div>
 

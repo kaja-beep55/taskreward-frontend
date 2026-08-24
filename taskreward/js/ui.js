@@ -47,7 +47,7 @@ export function taskCardHtml(task) {
       </div>
       <p class="task-desc">${escapeHtml(task.shortDesc)}</p>
       <div class="task-meta">
-        <span class="reward">🪙 ${task.reward} Coins</span>
+        <span class="reward">🪙 ${task.reward_coins || task.reward} Coins</span>
         <a class="btn btn-primary btn-sm" href="#/tasks/${task.id}">DETAILS</a>
       </div>
     </div>
