@@ -8,7 +8,7 @@ import * as mockServices from './services.js';
 import * as realServices from '../backend/js/services.js';
 
 // Determine which backend to use
-const useRealBackend = isSupabaseConfigured();
+const useRealBackend = isSupabaseConfigured() && !!supabase;
 
 if (useRealBackend) {
   console.log('🚀 Using Supabase backend');
